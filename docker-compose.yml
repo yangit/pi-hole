@@ -19,7 +19,6 @@ services:
     environment:
       TZ: 'America/Chicago'
       ServerIP: '192.168.2.158'
-      WEBPASSWORD: 'holagicure'
       # WEBPASSWORD: 'set a secure password here or it will be random'
     # Volumes store your data between container upgrades
     volumes:
