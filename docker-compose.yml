@@ -1,4 +1,9 @@
 version: '3'
+
+volumes: 
+  pihole:
+  dnsmasq:
+
 networks:
   pihole:
     driver: bridge
@@ -29,13 +34,16 @@ services:
       - '80:80/tcp'
       - '443:443/tcp'
     environment:
-      TZ: 'America/Chicago'
+      TZ: 'Asia/Makassar'
       ServerIP: '192.168.2.50'
-      WEBPASSWORD: 'set a secure'
-    # Volumes store your data between container upgrades
+      WEBPASSWORD: 'set a secure'      
+      DNS1: '172.18.0.2#5054'
+      DNS2: 'no'
     volumes:
-      - './etc-pihole/:/etc/pihole/'
-      - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+      - 'pihole:/etc/pihole/'
+      - 'dnsmasq:/etc/dnsmasq.d/'
+     # - './etc-pihole/:/etc/pihole/'
+     # - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
     dns:
       - 127.0.0.1
       - 1.1.1.1
