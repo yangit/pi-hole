@@ -1,4 +1,12 @@
 version: '3'
+networks:
+  pihole:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.18.0.0/16
+
+
 
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
@@ -7,6 +15,10 @@ services:
     ports:
       - '5054:5054/tcp'
       - '5054:5054/udp'
+    restart: unless-stopped
+    networks:
+      pihole:
+        ipv4_address: 172.18.0.2
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
@@ -18,8 +30,8 @@ services:
       - '443:443/tcp'
     environment:
       TZ: 'America/Chicago'
-      ServerIP: '192.168.2.158'
-      # WEBPASSWORD: 'set a secure password here or it will be random'
+      ServerIP: '192.168.2.50'
+      WEBPASSWORD: 'set a secure'
     # Volumes store your data between container upgrades
     volumes:
       - './etc-pihole/:/etc/pihole/'
@@ -32,3 +44,6 @@ services:
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
+    networks:
+      pihole:
+        ipv4_address: 172.18.0.3
